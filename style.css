@@ -148,7 +148,7 @@ main {
 }
 .btn-solid:hover { background: var(--sage-d); }
 .btn-solid:disabled { background: var(--line); color: var(--ink-40); cursor: not-allowed; }
-.btn-solid.wide { width: 100%; max-width: 280px; }
+.btn-solid.wide { display: block; width: 100%; max-width: 280px; margin: 0 auto; text-align: center; text-decoration: none; }
 
 .btn-outline {
   border: 1px solid var(--line);
@@ -334,12 +334,14 @@ main {
 }
 .calendar {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
   margin-bottom: 28px;
 }
 .calendar th, .calendar td {
+  width: 14.2857%;
   padding: 9px 2px;
   text-align: center;
   font-size: 13px;
@@ -452,6 +454,54 @@ main {
 .transit p { font-size: 13px; color: var(--ink-60); line-height: 1.7; margin: 10px 0 0; }
 
 /* ============================================================
+   7-0. 피로연 안내
+   ============================================================ */
+.reception-list { text-align: left; }
+.reception-row {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.reception-row:last-child { border-bottom: 1px solid var(--line); }
+.reception-label { font-size: 13px; font-weight: 600; color: var(--sage-d); margin: 0; }
+.reception-value { font-size: 13.5px; color: var(--ink-60); line-height: 1.7; margin: 0; }
+
+/* ============================================================
+   7-1. INFO TABS (포토부스 · 주차안내 · 답례품)
+   ============================================================ */
+.info-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+}
+.info-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-40);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color .15s ease, border-color .15s ease;
+}
+.info-tab.active { color: var(--sage-d); font-weight: 600; border-color: var(--sage); }
+.info-img {
+  width: 100%; aspect-ratio: 1/1;
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 18px;
+}
+.info-img img { width: 100%; height: 100%; object-fit: cover; }
+.info-caption { font-size: 14px; color: var(--ink-60); line-height: 1.8; margin: 0 0 18px; text-align: center; }
+.parking-detail { text-align: left; border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+.parking-title { font-size: 13.5px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+.parking-block p:last-child { font-size: 13px; color: var(--ink-60); line-height: 1.6; margin: 0; }
+
+/* ============================================================
    8. GUEST SNAP
    ============================================================ */
 .snap-desc { font-size: 14px; color: var(--ink-60); margin: 0 0 22px; }
@@ -496,7 +546,8 @@ main {
 /* ============================================================
    9. GIFT / ACCOUNTS
    ============================================================ */
-.gift-desc { font-size: 14px; color: var(--ink-60); margin: 0 0 24px; }
+.gift-desc { font-size: 14px; color: var(--ink-60); margin: 0 0 24px; line-height: 1.7; }
+
 .accordion { text-align: left; }
 .acc-item {
   border-top: 1px solid var(--line);
@@ -577,6 +628,34 @@ main {
   background: var(--white);
   resize: vertical;
 }
+#rsvpForm .field { display: flex; flex-direction: column; gap: 8px; }
+#rsvpForm .field-label { font-size: 13px; color: var(--ink-60); margin: 0; }
+#rsvpForm .field-label .req { color: var(--rose); margin-left: 2px; }
+#rsvpForm .pill-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+#rsvpForm .pill-group input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  pointer-events: none;
+}
+#rsvpForm .pill-group label {
+  display: flex; align-items: center; justify-content: center;
+  padding: 13px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--ink-60);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+#rsvpForm .pill-group input[type="radio"]:checked + label {
+  border-color: var(--ink);
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--ivory-2);
+}
+#rsvpForm .pill-group input[type="radio"]:focus-visible + label { outline: 2px solid var(--sage); outline-offset: 2px; }
 #rsvpForm .btn-solid { margin-top: 4px; }
 .rsvp-status { text-align: center; font-size: 12.5px; color: var(--sage-d); min-height: 16px; margin: 4px 0 0; }
 

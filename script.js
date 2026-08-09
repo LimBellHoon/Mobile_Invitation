@@ -39,13 +39,13 @@ const CONFIG = {
   // 2) 각 문항의 name="entry.123456789" 값을 미리보기 페이지 소스보기(Ctrl+U)에서 찾아
   //    아래 entry ID에 채워주세요. (문항 4개: 성함/구분/참석여부/참석인원/메시지)
   // 이 값을 채우면 위 rsvpSubmitEndpoint보다 우선 사용됩니다.
-  googleFormActionUrl: "", // 예: "https://docs.google.com/forms/d/e/xxxxxxxx/formResponse"
+  googleFormActionUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSer1XSQAVTsuZIL7wFLnfeSC0m4r_wV3lAXRHg28JZXFrHiGQ/formResponse",
   googleFormEntryIds: {
-    name: "",     // 성함 문항의 entry.xxxxxxxxxx
-    side: "",     // 구분(신랑측/신부측) 문항의 entry.xxxxxxxxxx
-    attend: "",   // 참석 여부 문항의 entry.xxxxxxxxxx
-    count: "",    // 참석 인원 문항의 entry.xxxxxxxxxx
-    message: "",  // 전하실 말씀 문항의 entry.xxxxxxxxxx
+    name: "entry.483015973",      // 성함
+    side: "entry.77029554",       // 구분(신랑측/신부측)
+    attend: "entry.170954859",    // 참석 여부
+    count: "entry.1051914485",    // 참석 인원
+    message: "entry.1125615396",  // 전하실 말씀
   },
 };
 
@@ -205,6 +205,29 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
 })();
 
 /* ============================================================
+   안내 탭 (포토부스 · 주차안내 · 답례품)
+   ============================================================ */
+(function initInfoTabs() {
+  const tabs = $$(".info-tab");
+  const panels = $$(".info-panel");
+  if (!tabs.length || !panels.length) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.tab;
+      tabs.forEach((t) => {
+        const active = t === tab;
+        t.classList.toggle("active", active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      panels.forEach((p) => {
+        p.hidden = p.dataset.panel !== target;
+      });
+    });
+  });
+})();
+
+/* ============================================================
    계좌번호 복사
    ============================================================ */
 (function initCopyButtons() {
@@ -314,6 +337,14 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   openBtn.addEventListener("click", () => (modal.hidden = false));
   closeBtn.addEventListener("click", () => (modal.hidden = true));
   modal.addEventListener("click", (e) => { if (e.target === modal) modal.hidden = true; });
+
+  // 페이지 접속 시 자동으로 한 번 띄우기 (같은 방문 세션에서는 반복되지 않도록)
+  if (!sessionStorage.getItem("rsvpAutoShown")) {
+    setTimeout(() => {
+      modal.hidden = false;
+      sessionStorage.setItem("rsvpAutoShown", "1");
+    }, 1200);
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();

@@ -19,6 +19,7 @@ assets/      사진·음악 넣는 폴더 (직접 추가해야 함)
    - `assets/hero.jpg` — 상단 대표 사진 (세로 4:5 비율 권장)
    - `assets/gallery/01.jpg` ~ `09.jpg` (또는 원하는 장수, `CONFIG.galleryImages`에 경로 추가)
    - `assets/og-cover.jpg` — 카카오톡/문자로 링크 공유 시 보일 미리보기 이미지
+   - `assets/photobooth.jpg`, `assets/parking.jpg` — 안내 탭(포토부스·주차안내)에 쓸 사진 (이미 넣어두었습니다)
 
 ## 2. 지도
 
