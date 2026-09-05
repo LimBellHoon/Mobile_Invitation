@@ -425,24 +425,35 @@
   </section>
 
   <footer class="footer">
-    <div class="footer-photo">
-      <img src="assets/gallery/04.jpg" alt="임종훈, 배보람" loading="lazy"
-           onerror="this.parentElement.classList.add('no-photo');" />
-
-      <div class="footer-overlay-top">
-        <p class="footer-thanks">
-          저희의 새로운 시작을<br />
-          함께 해주셔서 감사합니다.
-        </p>
-        <p class="footer-names">임종훈 <span class="heart">♥</span> 배보람</p>
-      </div>
-
-      <button type="button" class="btn-kakao-share" id="kakaoShareBtn">
-        <span class="kakao-ico">💬</span> 카카오톡으로 공유하기
-      </button>
+    <div class="waves-container" aria-hidden="true">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use href="#gentle-wave" x="48" y="0" fill-opacity="0.7" />
+          <use href="#gentle-wave" x="48" y="3" fill-opacity="0.5" />
+          <use href="#gentle-wave" x="48" y="5" fill-opacity="0.3" />
+          <use href="#gentle-wave" x="48" y="7" fill-opacity="1" />
+        </g>
+      </svg>
     </div>
 
-    <p class="footer-copy">© 2026 임종훈 · 배보람. All rights reserved.</p>
+    <p class="footer-thanks">
+      저희의 새로운 시작을<br />
+      함께 해주셔서 감사합니다.
+    </p>
+    <div class="footer-divider"></div>
+    <p class="footer-names">임종훈 <span class="heart">♥</span> 배보람</p>
+
+    <div class="footer-photo">
+      <img src="assets/gallery/04.jpg" alt="임종훈, 배보람" loading="lazy"
+           onerror="this.parentElement.style.display='none';" />
+    </div>
+
+    <button type="button" class="btn-kakao-share" id="kakaoShareBtn">
+      <span class="kakao-ico">💬</span> 카카오톡으로 공유하기
+    </button>
   </footer>
 
 </main>
