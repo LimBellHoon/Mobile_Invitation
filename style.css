@@ -455,8 +455,32 @@ main {
 .transit p { font-size: 13px; color: var(--ink-60); line-height: 1.7; margin: 10px 0 0; }
 
 /* ============================================================
-   7-0. 피로연 안내
+   7-1. 안내사항 슬라이더 (포토부스 · 주차안내 · 피로연)
    ============================================================ */
+.info-slider { position: relative; }
+.info-viewport { overflow: hidden; border-radius: 14px; }
+.info-track {
+  display: flex;
+  transition: transform .45s cubic-bezier(.65,.05,.2,1);
+}
+.info-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  text-align: center;
+}
+.info-slide-noimg { padding-top: 4px; }
+.info-img {
+  width: 100%; aspect-ratio: 1/1;
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 18px;
+}
+.info-img img { width: 100%; height: 100%; object-fit: cover; }
+.info-slide-title { font-size: 16px; font-weight: 600; margin: 0 0 10px; }
+.info-slide-text { font-size: 14px; color: var(--ink-60); line-height: 1.8; margin: 0 0 18px; text-align: center; }
+.parking-detail { text-align: left; border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+.parking-title { font-size: 13.5px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+.parking-block p:last-child { font-size: 13px; color: var(--ink-60); line-height: 1.6; margin: 0; }
+
 .reception-list { text-align: left; }
 .reception-row {
   display: grid;
@@ -469,38 +493,36 @@ main {
 .reception-label { font-size: 13px; font-weight: 600; color: var(--sage-d); margin: 0; }
 .reception-value { font-size: 13.5px; color: var(--ink-60); line-height: 1.7; margin: 0; }
 
-/* ============================================================
-   7-1. INFO TABS (포토부스 · 주차안내 · 답례품)
-   ============================================================ */
-.info-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 20px;
-}
-.info-tab {
-  flex: 1;
-  background: none;
-  border: none;
-  padding: 12px 4px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--ink-40);
+.info-arrow {
+  position: absolute;
+  top: 38%;
+  transform: translateY(-50%);
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(250,247,241,.9);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color .15s ease, border-color .15s ease;
+  z-index: 3;
+  transition: opacity .2s ease;
 }
-.info-tab.active { color: var(--sage-d); font-weight: 600; border-color: var(--sage); }
-.info-img {
-  width: 100%; aspect-ratio: 1/1;
-  border-radius: 14px; overflow: hidden;
-  margin-bottom: 18px;
+.info-arrow.prev { left: -6px; }
+.info-arrow.next { right: -6px; }
+.info-arrow:disabled { opacity: .3; cursor: default; }
+
+.info-dots { display: flex; justify-content: center; gap: 7px; margin-top: 18px; }
+.info-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: var(--line);
+  cursor: pointer;
 }
-.info-img img { width: 100%; height: 100%; object-fit: cover; }
-.info-caption { font-size: 14px; color: var(--ink-60); line-height: 1.8; margin: 0 0 18px; text-align: center; }
-.parking-detail { text-align: left; border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 14px; }
-.parking-title { font-size: 13.5px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
-.parking-block p:last-child { font-size: 13px; color: var(--ink-60); line-height: 1.6; margin: 0; }
+.info-dot.active { background: var(--sage); width: 16px; border-radius: 3px; transition: width .2s ease; }
 
 /* ============================================================
    8. GUEST SNAP

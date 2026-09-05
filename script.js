@@ -230,26 +230,52 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
 })();
 
 /* ============================================================
-   안내 탭 (포토부스 · 주차안내 · 답례품)
+   안내사항 슬라이더 (포토부스 · 주차안내 · 피로연)
    ============================================================ */
-(function initInfoTabs() {
-  const tabs = $$(".info-tab");
-  const panels = $$(".info-panel");
-  if (!tabs.length || !panels.length) return;
+(function initInfoSlider() {
+  const viewport = $(".info-viewport");
+  const track = $("#infoTrack");
+  const slides = $$(".info-slide");
+  const dots = $$(".info-dot");
+  const prevBtn = $("#infoPrev");
+  const nextBtn = $("#infoNext");
+  if (!track || !slides.length) return;
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const target = tab.dataset.tab;
-      tabs.forEach((t) => {
-        const active = t === tab;
-        t.classList.toggle("active", active);
-        t.setAttribute("aria-selected", String(active));
-      });
-      panels.forEach((p) => {
-        p.hidden = p.dataset.panel !== target;
-      });
+  let index = 0;
+
+  function render() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((d, i) => {
+      const active = i === index;
+      d.classList.toggle("active", active);
+      d.setAttribute("aria-selected", String(active));
     });
+    if (prevBtn) prevBtn.disabled = index === 0;
+    if (nextBtn) nextBtn.disabled = index === slides.length - 1;
+    if (viewport) viewport.style.height = slides[index].offsetHeight + "px";
+  }
+
+  function goTo(i) {
+    index = Math.max(0, Math.min(slides.length - 1, i));
+    render();
+  }
+
+  prevBtn && prevBtn.addEventListener("click", () => goTo(index - 1));
+  nextBtn && nextBtn.addEventListener("click", () => goTo(index + 1));
+  dots.forEach((d) => d.addEventListener("click", () => goTo(Number(d.dataset.i))));
+
+  // 스와이프 지원
+  let startX = null;
+  track.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener("touchend", (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
+    startX = null;
   });
+
+  window.addEventListener("resize", render);
+  render();
 })();
 
 /* ============================================================
