@@ -23,12 +23,13 @@
 
 <!-- ============ 봉투 오프닝 인트로 ============ -->
 <div class="envelope-intro" id="envelopeIntro" role="button" tabindex="0" aria-label="초대장 열기">
-  <svg class="envelope-fold" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-    <polyline points="0,0 50,46 100,0" />
-  </svg>
+  <div class="envelope-scene">
+    <div class="envelope-flap" id="envelopeFlap">
+      <div class="envelope-seal" id="envelopeSeal" aria-hidden="true"></div>
+    </div>
+  </div>
 
   <div class="envelope-center">
-    <div class="envelope-seal">종훈<br />&amp;<br />보람</div>
     <p class="envelope-eyebrow">Wedding Invitation</p>
     <p class="envelope-names">임종훈 <span class="amp">&amp;</span> 배보람</p>
   </div>
@@ -108,21 +109,23 @@
     <p class="eyebrow">CONTACT</p>
     <div class="contact-grid">
 
-      <div class="contact-card">
-        <p class="contact-title">신랑에게</p>
-        <p class="contact-name">임종훈</p>
-        <div class="contact-btns">
-          <a class="btn-round" href="tel:01062117194" aria-label="임종훈에게 전화하기">전화</a>
-          <a class="btn-round" href="sms:01062117194" aria-label="임종훈에게 문자보내기">문자</a>
+      <div class="contact-main-grid">
+        <div class="contact-card">
+          <p class="contact-title">신랑에게</p>
+          <p class="contact-name">임종훈</p>
+          <div class="contact-btns">
+            <a class="btn-round" href="tel:01062117194" aria-label="임종훈에게 전화하기">전화</a>
+            <a class="btn-round" href="sms:01062117194" aria-label="임종훈에게 문자보내기">문자</a>
+          </div>
         </div>
-      </div>
 
-      <div class="contact-card">
-        <p class="contact-title">신부에게</p>
-        <p class="contact-name">배보람</p>
-        <div class="contact-btns">
-          <a class="btn-round" href="tel:01062082810" aria-label="배보람에게 전화하기">전화</a>
-          <a class="btn-round" href="sms:01062082810" aria-label="배보람에게 문자보내기">문자</a>
+        <div class="contact-card">
+          <p class="contact-title">신부에게</p>
+          <p class="contact-name">배보람</p>
+          <div class="contact-btns">
+            <a class="btn-round" href="tel:01062082810" aria-label="배보람에게 전화하기">전화</a>
+            <a class="btn-round" href="sms:01062082810" aria-label="배보람에게 문자보내기">문자</a>
+          </div>
         </div>
       </div>
 
