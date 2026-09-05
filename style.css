@@ -107,7 +107,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   pointer-events: none;
   transition: opacity .4s ease;
 }
-.envelope-crease polyline {
+.envelope-crease path {
   fill: none;
   stroke: rgba(255,255,255,.3);
   stroke-width: .6;
@@ -119,6 +119,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 46%;
+  z-index: 1;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   transform-origin: top center;
   transform-style: preserve-3d;
