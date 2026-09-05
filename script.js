@@ -267,6 +267,7 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
    안내사항 슬라이더 (포토부스 · 주차안내 · 피로연)
    ============================================================ */
 (function initInfoSlider() {
+  const slider = $("#infoSlider");
   const viewport = $(".info-viewport");
   const track = $("#infoTrack");
   const slides = $$(".info-slide");
@@ -284,7 +285,18 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
       d.classList.toggle("active", active);
       d.setAttribute("aria-selected", String(active));
     });
-    if (viewport) viewport.style.height = slides[index].offsetHeight + "px";
+    const currentSlide = slides[index];
+    if (viewport) viewport.style.height = currentSlide.offsetHeight + "px";
+
+    // 화살표를 각 슬라이드의 제목("피로연 안내" 등) 높이에 맞춰 배치
+    if (slider && (prevBtn || nextBtn)) {
+      const title = currentSlide.querySelector(".info-slide-title");
+      if (title) {
+        const top = title.offsetTop + title.offsetHeight / 2;
+        if (prevBtn) prevBtn.style.top = top + "px";
+        if (nextBtn) nextBtn.style.top = top + "px";
+      }
+    }
   }
 
   // 순환: 마지막에서 다음 → 처음, 처음에서 이전 → 마지막
