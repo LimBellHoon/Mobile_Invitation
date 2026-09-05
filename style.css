@@ -63,8 +63,9 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .envelope-intro::before {
   content: "";
   position: absolute; inset: 0;
-  background: radial-gradient(120% 80% at 50% 8%, rgba(255,255,255,.14), rgba(0,0,0,0) 60%),
-              radial-gradient(90% 70% at 50% 105%, rgba(0,0,0,.18), rgba(0,0,0,0) 60%);
+  background: radial-gradient(70% 55% at 50% 46%, rgba(255,255,255,.16), rgba(0,0,0,0) 65%),
+              radial-gradient(120% 90% at 50% 105%, rgba(0,0,0,.22), rgba(0,0,0,0) 58%),
+              radial-gradient(120% 80% at 50% -10%, rgba(0,0,0,.14), rgba(0,0,0,0) 55%);
   z-index: 0;
   pointer-events: none;
 }
