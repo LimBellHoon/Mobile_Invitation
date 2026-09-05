@@ -522,6 +522,19 @@ main {
 .snap-drop.dragover { border-color: var(--sage); background: var(--ivory-2); }
 .snap-drop.locked { cursor: not-allowed; opacity: .55; }
 .snap-drop.locked:hover { border-color: var(--line); background: none; }
+.snap-fields { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.snap-input {
+  width: 100%;
+  font-family: var(--font-body);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--white);
+  resize: vertical;
+  box-sizing: border-box;
+}
 .snap-plus { font-size: 26px; color: var(--sage); }
 .snap-sub { font-size: 11.5px; color: var(--ink-40); }
 .snap-preview {

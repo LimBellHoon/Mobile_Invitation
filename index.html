@@ -309,11 +309,18 @@
     <p class="snap-desc">신랑·신부의 행복한 순간을 담아주세요 :)</p>
 
     <div class="snap-upload" id="snapUpload">
-      <a href="#" class="snap-drop" id="snapOpen" target="_blank" rel="noopener">
+      <input type="file" id="snapInput" accept="image/*,video/*" multiple hidden />
+      <label for="snapInput" class="snap-drop" id="snapDrop">
         <span class="snap-plus">＋</span>
         <span>사진 · 영상 올리기</span>
-        <span class="snap-sub">누르면 업로드 폼이 새 창으로 열립니다</span>
-      </a>
+        <span class="snap-sub">2026년 12월 5일부터 업로드가 가능합니다</span>
+      </label>
+      <div class="snap-preview" id="snapPreview"></div>
+      <div class="snap-fields">
+        <input type="text" id="snapName" class="snap-input" placeholder="보내시는 분 성함 (선택)" />
+        <textarea id="snapMessage" class="snap-input" placeholder="축하 메시지 (선택)" rows="2"></textarea>
+      </div>
+      <button class="btn-solid" id="snapSubmit" disabled>업로드하기</button>
       <p class="snap-note" id="snapNote"></p>
     </div>
   </section>
@@ -383,7 +390,7 @@
     <p class="rsvp-desc">
       소중한 시간을 내어 결혼식에<br />
       참석해주시는 모든 분들께 감사드립니다.<br />
-      예식이 지정좌석제로 진행되오니,<br />
+      원활한 식사 준비를 위해,<br />
       참석 여부를 회신해 주시면 더욱 감사하겠습니다.
     </p>
     <button class="btn-solid wide" id="rsvpOpen">참석 여부 전달</button>
