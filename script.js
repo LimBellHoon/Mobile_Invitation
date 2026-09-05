@@ -472,6 +472,38 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
 })();
 
 /* ============================================================
+   공유하기 버튼
+   ============================================================ */
+(function initShare() {
+  const btn = $("#kakaoShareBtn");
+  if (!btn) return;
+
+  // 카카오톡 정식 공유(카카오 SDK)는 별도 앱키 발급이 필요합니다.
+  // 우선은 기기의 공유 시트를 띄워서 카카오톡을 포함한 앱으로 바로 보낼 수 있게 합니다.
+  btn.addEventListener("click", async () => {
+    const shareData = {
+      title: document.title,
+      text: "임종훈 ♥ 배보람 결혼합니다",
+      url: location.href,
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        /* 사용자가 취소한 경우 등은 무시 */
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(location.href);
+      alert("링크가 복사되었습니다. 카카오톡에 붙여넣어 공유해주세요.");
+    } catch {
+      alert(location.href);
+    }
+  });
+})();
+
+/* ============================================================
    스크롤 리빌 애니메이션
    ============================================================ */
 (function initReveal() {
