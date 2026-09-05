@@ -19,7 +19,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="envelope-lock">
+
+<!-- ============ 봉투 오프닝 인트로 ============ -->
+<div class="envelope-intro" id="envelopeIntro" role="button" tabindex="0" aria-label="초대장 열기">
+  <svg class="envelope-fold" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <polyline points="0,0 50,46 100,0" />
+  </svg>
+
+  <div class="envelope-center">
+    <div class="envelope-seal">종훈<br />&amp;<br />보람</div>
+    <p class="envelope-eyebrow">Wedding Invitation</p>
+    <p class="envelope-names">임종훈 <span class="amp">&amp;</span> 배보람</p>
+  </div>
+
+  <p class="envelope-hint">눌러서 초대장을 열어보세요</p>
+</div>
 
 <!-- ============ 상단 고정 바 ============ -->
 <div class="topbar">
