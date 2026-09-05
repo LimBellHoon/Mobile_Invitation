@@ -203,15 +203,50 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
 
   const lightbox = $("#lightbox");
   const lightboxImg = $("#lightboxImg");
+  const lightboxCount = $("#lightboxCount");
+  const prevBtn = $("#lightboxPrev");
+  const nextBtn = $("#lightboxNext");
+  const images = CONFIG.galleryImages;
+  let current = 0;
+
+  function show(i) {
+    current = (i + images.length) % images.length;
+    lightboxImg.src = images[current];
+    if (lightboxCount) lightboxCount.textContent = `${current + 1} / ${images.length}`;
+  }
+
+  function open(i) {
+    show(i);
+    lightbox.hidden = false;
+  }
+  function close() { lightbox.hidden = true; }
 
   grid.addEventListener("click", (e) => {
     const item = e.target.closest(".g-item");
     if (!item) return;
-    lightboxImg.src = item.dataset.src;
-    lightbox.hidden = false;
+    open(images.indexOf(item.dataset.src));
   });
-  $("#lightboxClose").addEventListener("click", () => (lightbox.hidden = true));
-  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.hidden = true; });
+  $("#lightboxClose").addEventListener("click", close);
+  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) close(); });
+  prevBtn && prevBtn.addEventListener("click", (e) => { e.stopPropagation(); show(current - 1); });
+  nextBtn && nextBtn.addEventListener("click", (e) => { e.stopPropagation(); show(current + 1); });
+
+  document.addEventListener("keydown", (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(current - 1);
+    if (e.key === "ArrowRight") show(current + 1);
+  });
+
+  // 스와이프로 넘기기
+  let startX = null;
+  lightbox.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  lightbox.addEventListener("touchend", (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
 })();
 
 /* ============================================================

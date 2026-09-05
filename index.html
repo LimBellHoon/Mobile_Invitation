@@ -434,7 +434,7 @@
     <p class="footer-names">임종훈 <span class="heart">♥</span> 배보람</p>
 
     <div class="footer-photo">
-      <img src="assets/hero.jpg" alt="임종훈, 배보람" loading="lazy"
+      <img src="assets/gallery/04.jpg" alt="임종훈, 배보람" loading="lazy"
            onerror="this.parentElement.style.display='none';" />
     </div>
 
@@ -485,7 +485,10 @@
 <!-- ============ 갤러리 라이트박스 ============ -->
 <div class="lightbox" id="lightbox" hidden>
   <button class="lightbox-close" id="lightboxClose" aria-label="닫기">×</button>
+  <button class="lightbox-arrow prev" id="lightboxPrev" aria-label="이전 사진">‹</button>
   <img id="lightboxImg" src="" alt="" />
+  <button class="lightbox-arrow next" id="lightboxNext" aria-label="다음 사진">›</button>
+  <p class="lightbox-count" id="lightboxCount"></p>
 </div>
 
 <script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=mf0a2yr2mv"></script>
