@@ -20,13 +20,10 @@ const CONFIG = {
     "assets/gallery/07.jpg", "assets/gallery/08.jpg", "assets/gallery/09.jpg",
   ],
 
-  // 게스트 스냅 업로드를 실제로 저장하려면, 파일을 받아줄 엔드포인트가 필요합니다.
-  // (GitHub Pages는 정적 호스팅이라 서버 저장이 불가능합니다.)
-  // 예: Cloudinary unsigned upload URL, Firebase Storage REST 엔드포인트, 직접 만든 업로드 서버 등.
-  // 값을 채우면 업로드 버튼이 활성화되고, 비워두면 미리보기만 가능합니다.
-  guestSnapUploadEndpoint: "", // 예: "https://api.cloudinary.com/v1_1/your-cloud/auto/upload"
-  guestSnapUploadField: "file",
-  guestSnapExtraFields: {}, // 예: { upload_preset: "wedding_unsigned" }
+  // 게스트 스냅: 구글폼(파일 업로드 질문 포함)의 응답 링크를 넣으면
+  // "사진·영상 올리기" 버튼을 눌렀을 때 그 폼이 새 창으로 열립니다.
+  // (구글폼의 파일 업로드는 구글 로그인이 필요해서, 코드로 대신 전송할 수 없습니다.)
+  guestSnapFormUrl: "https://forms.gle/WK4whUHAVHknrb6z9",
 
   // 배경음악: 유튜브 영상 ID (워터마크/음원권리는 유튜브 업로더 기준을 따릅니다)
   bgmYoutubeId: "ZLIl-TDPZu0",
@@ -278,77 +275,30 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
    게스트 스냅 업로드
    ============================================================ */
 (function initGuestSnap() {
-  const input = $("#snapInput");
-  const drop = $("#snapDrop");
-  const preview = $("#snapPreview");
-  const submitBtn = $("#snapSubmit");
+  const link = $("#snapOpen");
   const note = $("#snapNote");
-  if (!input || !drop) return;
+  if (!link) return;
 
-  let files = [];
+  // 구글폼 파일 업로드 질문은 코드로 대신 전송할 수 없어서(구글 로그인 필요),
+  // 버튼을 누르면 실제 구글폼 페이지를 새 창으로 열어주는 방식으로 동작합니다.
+  // 결혼식 당일 0시부터 자동으로 열리고, 주소 끝에 ?preview=1 을 붙이면
+  // (본인 테스트용) 날짜와 상관없이 항상 열린 상태로 미리 확인할 수 있습니다.
+  const isPreview = new URLSearchParams(location.search).get("preview") === "1";
+  const uploadOpensAt = new Date(CONFIG.wedding.year, CONFIG.wedding.month - 1, CONFIG.wedding.day, 0, 0, 0);
+  const locked = new Date() < uploadOpensAt && !isPreview;
 
-  if (!CONFIG.guestSnapUploadEndpoint) {
-    note.textContent = "현재는 미리보기만 가능합니다. 관리자가 클라우드 업로드 주소를 연동하면 실제 업로드가 활성화됩니다.";
+  if (locked) {
+    link.classList.add("locked");
+    link.addEventListener("click", (e) => e.preventDefault());
+    note.textContent = "2026년 12월 5일부터 업로드가 가능합니다.";
+  } else if (!CONFIG.guestSnapFormUrl) {
+    link.classList.add("locked");
+    link.addEventListener("click", (e) => e.preventDefault());
+    note.textContent = "업로드 폼 주소가 아직 연결되지 않았습니다.";
+  } else {
+    link.href = CONFIG.guestSnapFormUrl;
+    note.textContent = "버튼을 누르면 구글폼이 새 창으로 열립니다.";
   }
-
-  function renderPreview() {
-    preview.innerHTML = files.map((f, i) => {
-      const url = URL.createObjectURL(f);
-      const isVideo = f.type.startsWith("video");
-      return `
-        <div class="p-thumb">
-          ${isVideo ? `<video src="${url}" muted></video>` : `<img src="${url}" alt="" />`}
-          <button type="button" class="p-remove" data-i="${i}" aria-label="삭제">×</button>
-        </div>`;
-    }).join("");
-    submitBtn.disabled = files.length === 0 || !CONFIG.guestSnapUploadEndpoint;
-  }
-
-  function addFiles(fileList) {
-    files = files.concat(Array.from(fileList));
-    renderPreview();
-  }
-
-  input.addEventListener("change", () => addFiles(input.files));
-
-  ["dragover", "dragenter"].forEach((evt) =>
-    drop.addEventListener(evt, (e) => { e.preventDefault(); drop.classList.add("dragover"); })
-  );
-  ["dragleave", "drop"].forEach((evt) =>
-    drop.addEventListener(evt, (e) => { e.preventDefault(); drop.classList.remove("dragover"); })
-  );
-  drop.addEventListener("drop", (e) => {
-    if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
-  });
-
-  preview.addEventListener("click", (e) => {
-    const btn = e.target.closest(".p-remove");
-    if (!btn) return;
-    files.splice(Number(btn.dataset.i), 1);
-    renderPreview();
-  });
-
-  submitBtn.addEventListener("click", async () => {
-    if (!CONFIG.guestSnapUploadEndpoint || files.length === 0) return;
-    submitBtn.disabled = true;
-    submitBtn.textContent = "업로드 중...";
-    let success = 0;
-    for (const file of files) {
-      const form = new FormData();
-      form.append(CONFIG.guestSnapUploadField, file);
-      Object.entries(CONFIG.guestSnapExtraFields).forEach(([k, v]) => form.append(k, v));
-      try {
-        const res = await fetch(CONFIG.guestSnapUploadEndpoint, { method: "POST", body: form });
-        if (res.ok) success++;
-      } catch {
-        /* 네트워크 오류는 아래 결과 메시지로 안내 */
-      }
-    }
-    submitBtn.textContent = "업로드하기";
-    note.textContent = `${success}/${files.length}개 업로드 완료. 소중한 순간 감사합니다 :)`;
-    files = [];
-    renderPreview();
-  });
 })();
 
 /* ============================================================
