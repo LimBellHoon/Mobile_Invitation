@@ -103,15 +103,10 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
     intro.classList.add("opening");
 
     // 2단계: 봉투 윗면(플랩)이 입체적으로 열리며 안으로 들어가는 느낌
+    // 브금은 항상 기본 Off — 사용자가 직접 사운드 버튼을 눌러야만 재생됩니다.
     setTimeout(() => {
       intro.classList.add("opened");
       document.body.classList.remove("envelope-lock");
-
-      // 봉투를 여는 탭 자체가 사용자 상호작용이므로, 이 타이밍에 배경음악을 시작합니다.
-      const soundBtn = $("#soundToggle");
-      if (soundBtn && soundBtn.getAttribute("aria-pressed") !== "true") {
-        soundBtn.click();
-      }
     }, 280);
 
     setTimeout(() => {
