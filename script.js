@@ -10,6 +10,8 @@ const CONFIG = {
     minute: 30,
   },
   venueName: "더 파티움",
+  venueLat: 37.5281813,
+  venueLng: 126.922743,
 
   // 갤러리에 쓸 이미지 파일명 (assets 폴더에 넣어주세요). 9~15장 권장.
   galleryImages: [
@@ -160,6 +162,32 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   }
   tick();
   setInterval(tick, 1000);
+})();
+
+/* ============================================================
+   네이버 지도
+   ============================================================ */
+(function initNaverMap() {
+  const el = $("#naverMap");
+  if (!el) return;
+
+  // 네이버 지도 SDK(maps.js)가 로드되지 않은 경우(키 오류, 네트워크 차단 등) 대비
+  if (typeof naver === "undefined" || !naver.maps) {
+    el.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#F3EEE4;color:#B79A66;font-size:13px;text-align:center;padding:12px;">지도를 불러오지 못했습니다.<br>네이버지도 버튼으로 확인해주세요.</div>`;
+    return;
+  }
+
+  const position = new naver.maps.LatLng(CONFIG.venueLat, CONFIG.venueLng);
+  const map = new naver.maps.Map(el, {
+    center: position,
+    zoom: 16,
+    scrollWheel: false,
+  });
+  new naver.maps.Marker({
+    position,
+    map,
+    title: CONFIG.venueName,
+  });
 })();
 
 /* ============================================================

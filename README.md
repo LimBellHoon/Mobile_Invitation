@@ -23,8 +23,15 @@ assets/      사진·음악 넣는 폴더 (직접 추가해야 함)
 
 ## 2. 지도
 
-현재 오시는 길 섹션은 예식장 주소 근처를 보여주는 무료 지도(OpenStreetMap)와, 티맵/카카오내비/네이버지도로 바로 연결되는 버튼으로 구성했습니다.
-`index.html`의 `iframe src` 안 `bbox`/`marker` 좌표와, 버튼 3개의 검색어(`살롱드레터 웨딩홀`)를 실제 예식장 이름/좌표로 바꿔주세요.
+오시는 길 섹션은 **네이버 지도(Dynamic Map)**로 연동되어 있습니다.
+
+1. [Naver Cloud Platform](https://www.ncloud.com) 가입 → 콘솔에서 **Maps → Application 등록**
+2. API 선택은 **Dynamic Map**만 체크
+3. "Web 서비스 URL"에 실제 배포 도메인(예: `https://아이디.github.io/저장소이름/`)을 등록해야 그 도메인에서 지도가 정상 표시됩니다. 도메인이 바뀌면(예: 커스텀 도메인 연결) 이 항목도 다시 등록해주세요.
+4. 발급된 **Client ID**를 `index.html` 맨 아래 `<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=...">`의 `ncpClientId` 값에 넣으면 됩니다.
+5. 지도 중심 좌표/예식장 이름은 `script.js`의 `CONFIG.venueLat`, `CONFIG.venueLng`, `CONFIG.venueName`에서 관리합니다.
+
+카카오내비·네이버지도 버튼(앱 바로 연결)은 `index.html`의 `.map-btns` 안 링크를 실제 예식장 이름/좌표로 바꾸면 됩니다.
 
 ## 3. 게스트 스냅(사진·영상 업로드) 연동
 
