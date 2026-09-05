@@ -347,34 +347,53 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
     renderPreview();
   });
 
+  function beforeUnloadGuard(e) {
+    e.preventDefault();
+    e.returnValue = "";
+  }
+
+  async function uploadOne(file, name, message) {
+    const data = await fileToBase64(file);
+    const res = await fetch(CONFIG.guestSnapUploadEndpoint, {
+      method: "POST",
+      body: JSON.stringify({
+        filename: file.name,
+        mimeType: file.type || "application/octet-stream",
+        data,
+        name,
+        message,
+      }),
+    });
+    const json = await res.json().catch(() => null);
+    return !!(json && json.ok);
+  }
+
   submitBtn.addEventListener("click", async () => {
     if (isLocked() || !CONFIG.guestSnapUploadEndpoint || files.length === 0) return;
     submitBtn.disabled = true;
-    submitBtn.textContent = "업로드 중...";
+    const total = files.length;
+    let done = 0;
+    submitBtn.textContent = `업로드 중... (0/${total}) 창을 닫지 말아주세요`;
+    window.addEventListener("beforeunload", beforeUnloadGuard);
+
     const name = nameInput ? nameInput.value.trim() : "";
     const message = messageInput ? messageInput.value.trim() : "";
-    let success = 0;
-    for (const file of files) {
-      try {
-        const data = await fileToBase64(file);
-        const res = await fetch(CONFIG.guestSnapUploadEndpoint, {
-          method: "POST",
-          body: JSON.stringify({
-            filename: file.name,
-            mimeType: file.type || "application/octet-stream",
-            data,
-            name,
-            message,
-          }),
-        });
-        const json = await res.json().catch(() => null);
-        if (json && json.ok) success++;
-      } catch {
-        /* 네트워크 오류는 아래 결과 메시지로 안내 */
-      }
-    }
+
+    // 여러 장을 동시에 보내서(순차 X) 전체 대기 시간을 줄입니다.
+    const results = await Promise.allSettled(
+      files.map((file) =>
+        uploadOne(file, name, message).then((ok) => {
+          done++;
+          submitBtn.textContent = `업로드 중... (${done}/${total}) 창을 닫지 말아주세요`;
+          return ok;
+        })
+      )
+    );
+    const success = results.filter((r) => r.status === "fulfilled" && r.value).length;
+
+    window.removeEventListener("beforeunload", beforeUnloadGuard);
     submitBtn.textContent = "업로드하기";
-    note.textContent = `${success}/${files.length}개 업로드 완료. 소중한 순간 감사합니다 :)`;
+    note.textContent = `${success}/${total}개 업로드 완료. 소중한 순간 감사합니다 :)`;
     files = [];
     if (nameInput) nameInput.value = "";
     if (messageInput) messageInput.value = "";
