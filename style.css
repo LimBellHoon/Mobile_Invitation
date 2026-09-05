@@ -497,21 +497,24 @@ main {
   position: absolute;
   top: 38%;
   transform: translateY(-50%);
-  width: 34px; height: 34px;
+  width: 42px; height: 42px;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  background: rgba(250,247,241,.9);
-  color: var(--ink);
-  font-size: 18px;
+  border: none;
+  background: var(--sage);
+  color: var(--white);
+  font-size: 22px;
+  font-weight: 600;
   line-height: 1;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   z-index: 3;
-  transition: opacity .2s ease;
+  box-shadow: 0 6px 16px rgba(46,43,39,.28);
+  transition: background .2s ease, transform .15s ease;
 }
-.info-arrow.prev { left: -6px; }
-.info-arrow.next { right: -6px; }
-.info-arrow:disabled { opacity: .3; cursor: default; }
+.info-arrow:hover { background: var(--sage-d); }
+.info-arrow:active { transform: translateY(-50%) scale(.92); }
+.info-arrow.prev { left: 2px; }
+.info-arrow.next { right: 2px; }
 
 .info-dots { display: flex; justify-content: center; gap: 7px; margin-top: 18px; }
 .info-dot {

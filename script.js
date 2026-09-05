@@ -250,13 +250,12 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
       d.classList.toggle("active", active);
       d.setAttribute("aria-selected", String(active));
     });
-    if (prevBtn) prevBtn.disabled = index === 0;
-    if (nextBtn) nextBtn.disabled = index === slides.length - 1;
     if (viewport) viewport.style.height = slides[index].offsetHeight + "px";
   }
 
+  // 순환: 마지막에서 다음 → 처음, 처음에서 이전 → 마지막
   function goTo(i) {
-    index = Math.max(0, Math.min(slides.length - 1, i));
+    index = (i + slides.length) % slides.length;
     render();
   }
 
