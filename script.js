@@ -60,40 +60,6 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   const intro = $("#envelopeIntro");
   if (!intro) return;
 
-  // 왁스 실링 스탬프 디자인 (매번 랜덤으로 하나 선택, 우리 톤에 맞춰 골드 컬러로 표현)
-  const SEAL_DESIGNS = [
-    // 플라워
-    `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="20" cy="20" r="2.2" fill="currentColor" stroke="none"/>
-      <path d="M20 20C20 12 14 8 20 4C26 8 20 12 20 20Z"/>
-      <path d="M20 20C28 20 32 14 36 20C32 26 28 20 20 20Z"/>
-      <path d="M20 20C20 28 26 32 20 36C14 32 20 28 20 20Z"/>
-      <path d="M20 20C12 20 8 26 4 20C8 14 12 20 20 20Z"/>
-    </svg>`,
-    // 보태니컬 잎가지
-    `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-      <path d="M20 34V7"/>
-      <path d="M20 27C14 25 12 19 14 15"/>
-      <path d="M20 21C26 19 28 13 26 9"/>
-      <path d="M20 15C15 13 14 9 16 6"/>
-    </svg>`,
-    // 모노그램
-    `<svg viewBox="0 0 40 40"><text x="20" y="26" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="15" letter-spacing="1" fill="currentColor">J &amp; B</text></svg>`,
-    // LOVE
-    `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 32C9 24.5 7 15 13.5 10.8C17.3 8.4 20 11 20 14.6C20 11 22.7 8.4 26.5 10.8C33 15 31 24.5 20 32Z"/>
-    </svg>`,
-    // 리프
-    `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 31C9 14 26 6 32 6C32 23 19 31 9 31Z"/>
-      <path d="M9 31C15.5 22.5 23.5 14.5 32 6"/>
-    </svg>`,
-  ];
-  const sealEl = $("#envelopeSeal");
-  if (sealEl) {
-    sealEl.innerHTML = SEAL_DESIGNS[Math.floor(Math.random() * SEAL_DESIGNS.length)];
-  }
-
   let opened = false;
   function openEnvelope() {
     if (opened) return;
