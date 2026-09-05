@@ -13,11 +13,10 @@ const CONFIG = {
   venueLat: 37.5281813,
   venueLng: 126.922743,
 
-  // 갤러리에 쓸 이미지 파일명 (assets 폴더에 넣어주세요). 9~15장 권장.
+  // 갤러리에 쓸 이미지 파일명 (assets/gallery 폴더). 9~15장 권장, 지금은 6장.
   galleryImages: [
     "assets/gallery/01.jpg", "assets/gallery/02.jpg", "assets/gallery/03.jpg",
     "assets/gallery/04.jpg", "assets/gallery/05.jpg", "assets/gallery/06.jpg",
-    "assets/gallery/07.jpg", "assets/gallery/08.jpg", "assets/gallery/09.jpg",
   ],
 
   // 게스트 스냅 업로드는 구글 드라이브에 저장됩니다 (Google Apps Script 경유).
