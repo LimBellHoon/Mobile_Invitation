@@ -55,6 +55,41 @@ const $ = (sel, el = document) => el.querySelector(sel);
 const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
 
 /* ============================================================
+   봉투 오프닝 인트로
+   ============================================================ */
+(function initEnvelopeIntro() {
+  const intro = $("#envelopeIntro");
+  const trigger = $("#envelopeOpen");
+  if (!intro || !trigger) return;
+
+  function openEnvelope() {
+    if (trigger.classList.contains("is-open")) return;
+    trigger.classList.add("is-open");
+    document.body.classList.remove("envelope-lock");
+
+    // 봉투를 여는 탭 자체가 사용자 상호작용이므로, 이 타이밍에 배경음악을 시작합니다.
+    const soundBtn = $("#soundToggle");
+    if (soundBtn && soundBtn.getAttribute("aria-pressed") !== "true") {
+      soundBtn.click();
+    }
+
+    setTimeout(() => intro.classList.add("opened"), 650);
+    setTimeout(() => {
+      intro.hidden = true;
+      document.dispatchEvent(new CustomEvent("envelope:opened"));
+    }, 1400);
+  }
+
+  trigger.addEventListener("click", openEnvelope);
+  trigger.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openEnvelope();
+    }
+  });
+})();
+
+/* ============================================================
    배경음악 토글 (유튜브 IFrame Player API)
    ============================================================ */
 (function initSound() {
@@ -416,12 +451,19 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   closeBtn.addEventListener("click", () => (modal.hidden = true));
   modal.addEventListener("click", (e) => { if (e.target === modal) modal.hidden = true; });
 
-  // 페이지 접속 시 자동으로 한 번 띄우기 (같은 방문 세션에서는 반복되지 않도록)
-  if (!sessionStorage.getItem("rsvpAutoShown")) {
+  // 첫 방문 시 자동으로 한 번 띄우기 (같은 방문 세션에서는 반복되지 않도록).
+  // 봉투 인트로가 있으면 봉투를 연 뒤 1.2초 후, 없으면 페이지 접속 1.2초 후 노출됩니다.
+  function autoShowOnce() {
+    if (sessionStorage.getItem("rsvpAutoShown")) return;
     setTimeout(() => {
       modal.hidden = false;
       sessionStorage.setItem("rsvpAutoShown", "1");
     }, 1200);
+  }
+  if ($("#envelopeIntro")) {
+    document.addEventListener("envelope:opened", autoShowOnce, { once: true });
+  } else {
+    autoShowOnce();
   }
 
   form.addEventListener("submit", async (e) => {
