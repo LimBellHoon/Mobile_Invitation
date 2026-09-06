@@ -104,61 +104,45 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute;
   inset: 0;
 }
+/* 접힘면: 선 없이 아주 옅은 명암 차이로만 구분 */
 .facet-bottom {
   clip-path: polygon(0 100%, 100% 100%, 50% 46%);
-  background: linear-gradient(0deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,0) 45%);
+  background: rgba(0,0,0,.045);
 }
 .facet-left {
   clip-path: polygon(0 0, 50% 46%, 0 100%);
-  background: linear-gradient(100deg, rgba(0,0,0,.045) 0%, rgba(0,0,0,0) 55%);
+  background: rgba(0,0,0,.032);
 }
 .facet-right {
   clip-path: polygon(100% 0, 50% 46%, 100% 100%);
-  background: linear-gradient(260deg, rgba(255,255,255,.03) 0%, rgba(0,0,0,0) 55%);
+  background: rgba(0,0,0,.014);
 }
 .envelope-intro.opening .envelope-facets,
 .envelope-intro.opened .envelope-facets { opacity: 0; }
-.envelope-crease {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  transition: opacity .4s ease;
-}
-.envelope-crease .crease-shadow {
-  fill: none;
-  stroke: rgba(0,0,0,.3);
-  stroke-width: 1.4;
-  vector-effect: non-scaling-stroke;
-  filter: blur(1px);
-}
-.envelope-crease .crease-light {
-  fill: none;
-  stroke: rgba(255,255,255,.18);
-  stroke-width: .5;
-  vector-effect: non-scaling-stroke;
-}
-.envelope-intro.opening .envelope-crease,
-.envelope-intro.opened .envelope-crease { opacity: 0; }
-.envelope-flap {
+/* 플랩 + 실링왁스가 함께 3D로 젖혀지도록 하나의 축(pivot)으로 묶음 */
+.flap-pivot {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 46%;
   z-index: 1;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
   transform-origin: top center;
   transform-style: preserve-3d;
-  transition: opacity .5s ease .5s;
+  transition: opacity .45s ease .35s;
 }
-.envelope-intro.opening .envelope-flap,
-.envelope-intro.opened .envelope-flap {
-  animation: flapOpen 1s cubic-bezier(.4,0,.2,1) .05s forwards;
+.envelope-intro.opening .flap-pivot,
+.envelope-intro.opened .flap-pivot {
+  animation: flapOpen 1s cubic-bezier(.42,0,.25,1) .04s forwards;
 }
-.envelope-intro.opened .envelope-flap { opacity: 0; }
+.envelope-intro.opened .flap-pivot { opacity: 0; }
+.envelope-flap {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-style: preserve-3d;
+}
 @keyframes flapOpen {
-  0%   { transform: rotateX(0deg) translateZ(0); }
-  72%  { transform: rotateX(-179deg) translateZ(2px); }
-  100% { transform: rotateX(-167deg) translateZ(2px); }
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-120deg); }
 }
 .flap-face {
   position: absolute; inset: 0;
@@ -191,27 +175,22 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .envelope-seal {
   position: absolute;
   left: 50%;
-  top: 46%;
+  top: 100%;
   width: 23%;
   max-width: 112px;
   min-width: 64px;
   aspect-ratio: 1 / 1;
   display: flex; align-items: center; justify-content: center;
   z-index: 2;
-  transform: translate(-50%, -50%);
-  transition: transform .6s cubic-bezier(.34,1.56,.64,1), opacity .4s ease .05s, filter .6s ease;
+  /* 봉투 표면에서 살짝 떠 있는 두께감 (플랩과 함께 3D로 회전) */
+  transform: translate(-50%, -50%) translateZ(4px);
 }
 .envelope-seal img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 8px 14px rgba(20,15,4,.45));
+  filter: drop-shadow(0 6px 10px rgba(20,15,4,.4));
 }
-.envelope-intro.opening .envelope-seal {
-  transform: translate(-50%, -50%) translateY(-18px) scale(1.06) rotate(-6deg);
-  filter: drop-shadow(0 14px 10px rgba(0,0,0,.35));
-}
-.envelope-intro.opened .envelope-seal { opacity: 0; }
 .envelope-center {
   position: relative;
   z-index: 2;
