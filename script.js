@@ -349,11 +349,11 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
     const currentSlide = slides[index];
     if (viewport) viewport.style.height = currentSlide.offsetHeight + "px";
 
-    // 화살표를 각 슬라이드의 제목("피로연 안내" 등) 높이에 맞춰 배치
+    // 화살표를 각 슬라이드의 이미지 세로 중앙에 맞춰 배치
     if (slider && (prevBtn || nextBtn)) {
-      const title = currentSlide.querySelector(".info-slide-title");
-      if (title) {
-        const top = title.offsetTop + title.offsetHeight / 2;
+      const img = currentSlide.querySelector(".info-img");
+      if (img) {
+        const top = img.offsetTop + img.offsetHeight / 2;
         if (prevBtn) prevBtn.style.top = top + "px";
         if (nextBtn) nextBtn.style.top = top + "px";
       }
