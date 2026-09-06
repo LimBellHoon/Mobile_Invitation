@@ -65,7 +65,7 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
     if (opened) return;
     opened = true;
 
-    // 1단계: 플랩과 실링왁스가 함께 3D로 젖혀지기 시작 (1.5s)
+    // 1단계: 플랩과 실링왁스가 함께 3D로 젖혀지기 시작 (1.95s)
     intro.classList.add("opening");
 
     // 2단계: 플랩 애니메이션이 약 20% 진행된 시점부터 전체가 페이드
@@ -78,7 +78,7 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
     setTimeout(() => {
       intro.hidden = true;
       document.dispatchEvent(new CustomEvent("envelope:opened"));
-    }, 280 + 1320);
+    }, 280 + 1750);
   }
 
   intro.addEventListener("click", openEnvelope);
