@@ -50,7 +50,8 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   background: var(--sage-d);
   cursor: pointer;
   overflow: hidden;
-  transition: opacity .6s ease .4s, visibility .6s ease .4s;
+  /* 플랩 애니메이션이 20% 진행된 시점(탭 후 약 0.34s)부터 페이드 시작 */
+  transition: opacity .9s ease .06s, visibility .9s ease .06s;
 }
 .envelope-intro.opened {
   opacity: 0;
@@ -98,7 +99,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute;
   inset: 0;
   z-index: 1;
-  transition: opacity .4s ease;
+  transition: opacity .5s ease .34s;
 }
 .envelope-facet {
   position: absolute;
@@ -128,11 +129,11 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   z-index: 1;
   transform-origin: top center;
   transform-style: preserve-3d;
-  transition: opacity .45s ease .35s;
+  transition: opacity .9s ease .06s;
 }
 .envelope-intro.opening .flap-pivot,
 .envelope-intro.opened .flap-pivot {
-  animation: flapOpen 1s cubic-bezier(.42,0,.25,1) .04s forwards;
+  animation: flapOpen 1.5s cubic-bezier(.42,0,.25,1) .04s forwards;
 }
 .envelope-intro.opened .flap-pivot { opacity: 0; }
 .envelope-flap {
@@ -200,7 +201,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   flex-direction: column;
   align-items: center;
   margin-top: 24%;
-  transition: opacity .4s ease;
+  transition: opacity .5s ease .34s;
 }
 .envelope-intro.opening .envelope-center,
 .envelope-intro.opened .envelope-center { opacity: 0; }
@@ -232,7 +233,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   color: rgba(255,255,255,.75);
   margin: 0;
   animation: envPulse 1.9s ease-in-out infinite;
-  transition: opacity .3s ease;
+  transition: opacity .4s ease .34s;
 }
 .envelope-intro.opening .envelope-hint,
 .envelope-intro.opened .envelope-hint { opacity: 0; }

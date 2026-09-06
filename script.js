@@ -65,10 +65,10 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
     if (opened) return;
     opened = true;
 
-    // 1단계: 실 스탬프가 살짝 들리며 개봉 예고
+    // 1단계: 플랩과 실링왁스가 함께 3D로 젖혀지기 시작 (1.5s)
     intro.classList.add("opening");
 
-    // 2단계: 봉투 윗면(플랩)이 입체적으로 열리며 안으로 들어가는 느낌
+    // 2단계: 플랩 애니메이션이 약 20% 진행된 시점부터 전체가 페이드
     // 브금은 항상 기본 Off — 사용자가 직접 사운드 버튼을 눌러야만 재생됩니다.
     setTimeout(() => {
       intro.classList.add("opened");
@@ -78,7 +78,7 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
     setTimeout(() => {
       intro.hidden = true;
       document.dispatchEvent(new CustomEvent("envelope:opened"));
-    }, 280 + 1000);
+    }, 280 + 1320);
   }
 
   intro.addEventListener("click", openEnvelope);
