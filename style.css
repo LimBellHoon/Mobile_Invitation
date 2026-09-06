@@ -74,8 +74,10 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .envelope-card::before {
   content: "";
   position: absolute; inset: 0;
-  background: radial-gradient(120% 90% at 50% 105%, rgba(0,0,0,.16), rgba(0,0,0,0) 58%),
-              radial-gradient(120% 80% at 50% -10%, rgba(0,0,0,.1), rgba(0,0,0,0) 55%);
+  /* 도장 주변에 은은하게 빛이 고이고, 가장자리로 갈수록 어두워지는 실제 촬영 느낌 */
+  background: radial-gradient(75% 50% at 50% 40%, rgba(255,255,255,.09), rgba(0,0,0,0) 70%),
+              radial-gradient(120% 90% at 50% 108%, rgba(0,0,0,.2), rgba(0,0,0,0) 60%),
+              radial-gradient(120% 70% at 50% -12%, rgba(0,0,0,.12), rgba(0,0,0,0) 55%);
   z-index: 0;
   pointer-events: none;
 }
@@ -84,7 +86,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute; inset: 0;
   background-image: var(--grain), var(--grain-fine);
   background-size: 160px 160px, 60px 60px;
-  opacity: .22;
+  opacity: .3;
   mix-blend-mode: multiply;
   z-index: 0;
   pointer-events: none;
@@ -194,7 +196,8 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 6px 10px rgba(20,15,4,.4));
+  /* 사진 그대로면 봉투(그래픽)와 톤이 튀어서, 채도·대비를 살짝 낮춰 맞춤 */
+  filter: saturate(.8) contrast(.9) brightness(1.03) drop-shadow(0 4px 8px rgba(20,15,4,.3));
 }
 .envelope-center {
   /* 접힘선(도장 → 좌우 아래로 벌어지는 선)과 겹치지 않는 높이에 고정 */
