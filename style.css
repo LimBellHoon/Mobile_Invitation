@@ -95,21 +95,6 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   z-index: 1;
   perspective: 1400px;
 }
-.envelope-flap-shadow {
-  position: absolute;
-  left: 8%; right: 8%; top: 45%;
-  height: 36px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(10,8,2,.4) 0%, rgba(10,8,2,0) 72%);
-  opacity: 0;
-  transform: scaleX(.7);
-  transition: opacity .6s ease .1s, transform .6s ease .1s;
-}
-.envelope-intro.opening .envelope-flap-shadow,
-.envelope-intro.opened .envelope-flap-shadow {
-  opacity: 1;
-  transform: scaleX(1.06);
-}
 .envelope-facet {
   position: absolute;
   inset: 0;
@@ -142,7 +127,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   stroke: rgba(15,17,10,.4);
   stroke-width: 1.4;
   vector-effect: non-scaling-stroke;
-  filter: url(#creaseBlur);
+  filter: blur(1px);
 }
 .envelope-crease .crease-light {
   fill: none;
@@ -212,7 +197,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   display: flex; align-items: center; justify-content: center;
   z-index: 2;
   transform: translate(-50%, -50%);
-  transition: transform .6s cubic-bezier(.34,1.56,.64,1), opacity .35s ease .45s, filter .6s ease;
+  transition: transform .6s cubic-bezier(.34,1.56,.64,1), opacity .4s ease .05s, filter .6s ease;
 }
 .envelope-seal img {
   width: 100%;
