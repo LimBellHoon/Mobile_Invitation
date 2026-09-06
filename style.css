@@ -82,10 +82,10 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .envelope-card::after {
   content: "";
   position: absolute; inset: 0;
-  background-image: var(--grain), var(--grain-fine);
-  background-size: 160px 160px, 60px 60px;
-  opacity: .16;
-  mix-blend-mode: overlay;
+  background-image: url('assets/linen-grain.png');
+  background-size: 150px 115px;
+  opacity: .5;
+  mix-blend-mode: multiply;
   z-index: 0;
   pointer-events: none;
 }
@@ -169,10 +169,10 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .flap-face-front::before {
   content: "";
   position: absolute; inset: 0;
-  background-image: var(--grain);
-  background-size: 140px 140px;
-  opacity: .06;
-  mix-blend-mode: overlay;
+  background-image: url('assets/linen-grain.png');
+  background-size: 150px 115px;
+  opacity: .35;
+  mix-blend-mode: multiply;
 }
 .flap-face-back {
   transform: rotateX(180deg);
