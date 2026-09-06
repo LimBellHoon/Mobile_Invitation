@@ -340,24 +340,6 @@ main > section.section:nth-of-type(even) {
   margin: 0 0 28px;
 }
 
-/* signature sprig divider — line-art botanical, draws in on scroll */
-.divider {
-  height: 46px;
-  margin: 0 auto;
-  width: 120px;
-  background: none;
-  position: relative;
-}
-.divider::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 46'%3E%3Cpath d='M2 23c20 0 20-16 40-16s20 16 40 16 20-16 36-16' stroke='%237C8B72' stroke-width='1' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='60' cy='23' r='2.4' fill='%23D8ADA2'/%3E%3C/svg%3E") center/contain no-repeat;
-  opacity: 0;
-  transform: scaleX(.6);
-  transition: opacity .9s ease, transform .9s ease;
-}
-.divider.in-view::before { opacity: 1; transform: scaleX(1); }
-
 .btn-solid {
   display: inline-block;
   background: var(--sage);
@@ -457,7 +439,6 @@ main > section.section:nth-of-type(even) {
   color: var(--ink);
   margin: 26px 0 4px;
 }
-.sprig { height: 8px; }
 
 /* ============================================================
    2. INTRO — names / date / venue

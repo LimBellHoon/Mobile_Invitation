@@ -644,7 +644,7 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
    스크롤 리빌 애니메이션
    ============================================================ */
 (function initReveal() {
-  const targets = $$(".section, .divider");
+  const targets = $$(".section");
   if (!("IntersectionObserver" in window) || targets.length === 0) {
     targets.forEach((t) => t.classList.add("in-view"));
     return;
