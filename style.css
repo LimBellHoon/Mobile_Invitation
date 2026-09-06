@@ -200,9 +200,9 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   filter: saturate(.8) contrast(.9) brightness(1.03) drop-shadow(0 4px 8px rgba(20,15,4,.3));
 }
 .envelope-center {
-  /* 플랩 안쪽 52%(카드 기준 24%) 지점 — 접힘선과 겹치지 않고 도장 바로 위에 놓임 */
+  /* 플랩 안쪽 30%(카드 기준 약 14%) 지점 — 상단 여백과 도장 사이 균형 */
   position: absolute;
-  top: 52%;
+  top: 30%;
   left: 0; right: 0;
   z-index: 3;
   display: flex;
