@@ -46,11 +46,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: fixed;
   inset: 0;
   z-index: 300;
-  background: var(--sage);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background: var(--sage-d);
   cursor: pointer;
   overflow: hidden;
   transition: opacity .6s ease .4s, visibility .6s ease .4s;
@@ -60,7 +56,20 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   visibility: hidden;
   pointer-events: none;
 }
-.envelope-intro::before {
+.envelope-card {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  height: 100%;
+  margin: 0 auto;
+  background: var(--sage);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.envelope-card::before {
   content: "";
   position: absolute; inset: 0;
   background: radial-gradient(70% 55% at 50% 46%, rgba(255,255,255,.16), rgba(0,0,0,0) 65%),
@@ -69,7 +78,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   z-index: 0;
   pointer-events: none;
 }
-.envelope-intro::after {
+.envelope-card::after {
   content: "";
   position: absolute; inset: 0;
   background-image: var(--grain);
@@ -138,10 +147,6 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .flap-face {
   position: absolute; inset: 0;
   backface-visibility: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 8%;
 }
 .flap-face-front {
   background: var(--sage);
@@ -168,11 +173,16 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   mix-blend-mode: multiply;
 }
 .envelope-seal {
-  position: relative;
-  width: 78px; height: 78px;
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 23%;
+  max-width: 112px;
+  min-width: 64px;
+  aspect-ratio: 1 / 1;
   display: flex; align-items: center; justify-content: center;
-  z-index: 1;
-  transform: translateY(50%);
+  z-index: 2;
+  transform: translate(-50%, -50%);
   transition: transform .6s cubic-bezier(.34,1.56,.64,1), opacity .35s ease .45s, filter .6s ease;
 }
 .envelope-seal img {
@@ -182,7 +192,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   filter: drop-shadow(0 8px 14px rgba(20,15,4,.45));
 }
 .envelope-intro.opening .envelope-seal {
-  transform: translateY(50%) translateY(-18px) scale(1.06) rotate(-6deg);
+  transform: translate(-50%, -50%) translateY(-18px) scale(1.06) rotate(-6deg);
   filter: drop-shadow(0 14px 10px rgba(0,0,0,.35));
 }
 .envelope-intro.opened .envelope-seal { opacity: 0; }
