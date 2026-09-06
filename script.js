@@ -161,9 +161,13 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
         html += "<td></td>";
       } else {
         const isWed = date === day;
+        // 좁은 화면(320px 등)에서도 셀 안에서 줄바꿈되지 않도록 짧은 표기 사용
+        const ampmText = hour < 12 ? "오전" : "오후";
+        const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+        const timeText = `${ampmText} ${hour12}:${String(minute).padStart(2, "0")}`;
         html += `<td class="${isWed ? "wed-day" : ""}">${
           isWed
-            ? `<span class="day-badge">${date}</span><span class="day-time">오후 5시 30분</span>`
+            ? `<span class="day-badge">${date}</span><span class="day-time">${timeText}</span>`
             : date
         }</td>`;
         date++;
@@ -213,7 +217,7 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   const position = new naver.maps.LatLng(CONFIG.venueLat, CONFIG.venueLng);
   const map = new naver.maps.Map(el, {
     center: position,
-    zoom: 16,
+    zoom: 15, // 기본 표시 범위 약 300m (축척 확인 완료)
     scrollWheel: false,
   });
   new naver.maps.Marker({
@@ -246,10 +250,30 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   const images = CONFIG.galleryImages;
   let current = 0;
 
-  function show(i) {
-    current = (i + images.length) % images.length;
-    lightboxImg.src = images[current];
-    if (lightboxCount) lightboxCount.textContent = `${current + 1} / ${images.length}`;
+  // dir: 0 = 애니메이션 없이 즉시 표시(최초 오픈), 1 = 다음(왼쪽으로 슬라이드), -1 = 이전(오른쪽으로 슬라이드)
+  function show(i, dir = 0) {
+    const next = (i + images.length) % images.length;
+
+    if (!dir || !lightboxImg.getAttribute("src")) {
+      current = next;
+      lightboxImg.src = images[current];
+      if (lightboxCount) lightboxCount.textContent = `${current + 1} / ${images.length}`;
+      return;
+    }
+
+    const outClass = dir > 0 ? "slide-out-left" : "slide-out-right";
+    const inClass = dir > 0 ? "slide-in-right" : "slide-in-left";
+    lightboxImg.classList.add(outClass);
+    setTimeout(() => {
+      current = next;
+      lightboxImg.src = images[current];
+      if (lightboxCount) lightboxCount.textContent = `${current + 1} / ${images.length}`;
+      lightboxImg.classList.remove(outClass);
+      lightboxImg.classList.add(inClass);
+      // 강제 리플로우 후 클래스를 제거해야 시작 위치에서 정상 위치로 트랜지션이 걸림
+      void lightboxImg.offsetWidth;
+      lightboxImg.classList.remove(inClass);
+    }, 180);
   }
 
   function open(i) {
@@ -265,14 +289,14 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   });
   $("#lightboxClose").addEventListener("click", close);
   lightbox.addEventListener("click", (e) => { if (e.target === lightbox) close(); });
-  prevBtn && prevBtn.addEventListener("click", (e) => { e.stopPropagation(); show(current - 1); });
-  nextBtn && nextBtn.addEventListener("click", (e) => { e.stopPropagation(); show(current + 1); });
+  prevBtn && prevBtn.addEventListener("click", (e) => { e.stopPropagation(); show(current - 1, -1); });
+  nextBtn && nextBtn.addEventListener("click", (e) => { e.stopPropagation(); show(current + 1, 1); });
 
   document.addEventListener("keydown", (e) => {
     if (lightbox.hidden) return;
     if (e.key === "Escape") close();
-    if (e.key === "ArrowLeft") show(current - 1);
-    if (e.key === "ArrowRight") show(current + 1);
+    if (e.key === "ArrowLeft") show(current - 1, -1);
+    if (e.key === "ArrowRight") show(current + 1, 1);
   });
 
   // 스와이프로 넘기기
@@ -281,7 +305,7 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   lightbox.addEventListener("touchend", (e) => {
     if (startX === null) return;
     const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
     startX = null;
   });
 })();
