@@ -520,13 +520,35 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   const status = $("#rsvpStatus");
   if (!openBtn || !modal) return;
 
+  const dontShowBtn = $("#rsvpDontShow");
+  const DONT_SHOW_KEY = "rsvpDontShowAgain";
+
+  function store(get, key, value) {
+    // 브라우저 설정에 따라 저장소 접근이 막힐 수 있으므로 항상 감싸서 처리
+    try {
+      return get ? localStorage.getItem(key) : localStorage.setItem(key, value);
+    } catch (e) {
+      return null;
+    }
+  }
+
   openBtn.addEventListener("click", () => (modal.hidden = false));
   closeBtn.addEventListener("click", () => (modal.hidden = true));
   modal.addEventListener("click", (e) => { if (e.target === modal) modal.hidden = true; });
 
+  // "다시 보지 않기" — 이후 방문에서는 자동으로 뜨지 않습니다.
+  // (하단 '참석 여부 전달' 버튼을 직접 누르면 언제든 다시 열립니다.)
+  if (dontShowBtn) {
+    dontShowBtn.addEventListener("click", () => {
+      store(false, DONT_SHOW_KEY, "1");
+      modal.hidden = true;
+    });
+  }
+
   // 첫 방문 시 자동으로 한 번 띄우기 (같은 방문 세션에서는 반복되지 않도록).
   // 봉투 인트로가 있으면 봉투를 연 뒤 1.2초 후, 없으면 페이지 접속 1.2초 후 노출됩니다.
   function autoShowOnce() {
+    if (store(true, DONT_SHOW_KEY)) return;
     if (sessionStorage.getItem("rsvpAutoShown")) return;
     setTimeout(() => {
       modal.hidden = false;
