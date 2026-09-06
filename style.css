@@ -115,29 +115,6 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 }
 .envelope-intro.opening .envelope-facet,
 .envelope-intro.opened .envelope-facet { opacity: 0; }
-.envelope-crease {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  transition: opacity .4s ease;
-}
-.envelope-crease .crease-shadow {
-  fill: none;
-  stroke: rgba(15,17,10,.4);
-  stroke-width: 1.4;
-  vector-effect: non-scaling-stroke;
-  filter: blur(1px);
-}
-.envelope-crease .crease-light {
-  fill: none;
-  stroke: rgba(255,255,255,.6);
-  stroke-width: .55;
-  vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0.35px 0.35px 0.35px rgba(10,10,5,.55));
-}
-.envelope-intro.opening .envelope-crease,
-.envelope-intro.opened .envelope-crease { opacity: 0; }
 .envelope-flap {
   position: absolute;
   top: 0; left: 0;
