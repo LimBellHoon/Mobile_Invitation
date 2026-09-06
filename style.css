@@ -95,7 +95,9 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute;
   inset: 0;
   z-index: 1;
-  perspective: 1400px;
+  /* 힌지(상단) 쪽에 소실점을 두고 원근을 강하게 — 플랩이 화면 안쪽(Z-)으로 젖혀지는 게 확실히 보이도록 */
+  perspective: 900px;
+  perspective-origin: 50% 12%;
 }
 .envelope-facets {
   position: absolute;
@@ -147,8 +149,9 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   transform-style: preserve-3d;
 }
 @keyframes flapOpen {
-  0%   { transform: rotateX(0deg); }
-  100% { transform: rotateX(-120deg); }
+  /* 음수 rotateX = 아래쪽 끝이 화면 안쪽(Z-)으로 젖혀짐. 멀어질수록 살짝 어두워지게 */
+  0%   { transform: rotateX(0deg); filter: brightness(1); }
+  100% { transform: rotateX(-120deg); filter: brightness(.84); }
 }
 .flap-face {
   position: absolute; inset: 0;
