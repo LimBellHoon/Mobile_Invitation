@@ -83,7 +83,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute; inset: 0;
   background-image: var(--grain);
   background-size: 160px 160px;
-  opacity: .07;
+  opacity: .12;
   mix-blend-mode: overlay;
   z-index: 0;
   pointer-events: none;
@@ -109,6 +109,26 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   opacity: 1;
   transform: scaleX(1.06);
 }
+.envelope-facet {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transition: opacity .4s ease;
+}
+.facet-bottom {
+  clip-path: polygon(0 100%, 100% 100%, 50% 46%);
+  background: linear-gradient(0deg, rgba(0,0,0,.14) 0%, rgba(0,0,0,.02) 55%, rgba(0,0,0,0) 100%);
+}
+.facet-left {
+  clip-path: polygon(0 0, 50% 46%, 0 100%);
+  background: linear-gradient(100deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,0) 60%);
+}
+.facet-right {
+  clip-path: polygon(100% 0, 50% 46%, 100% 100%);
+  background: linear-gradient(260deg, rgba(255,255,255,.06) 0%, rgba(0,0,0,0) 55%);
+}
+.envelope-intro.opening .envelope-facet,
+.envelope-intro.opened .envelope-facet { opacity: 0; }
 .envelope-crease {
   position: absolute;
   inset: 0;
@@ -116,10 +136,17 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   pointer-events: none;
   transition: opacity .4s ease;
 }
-.envelope-crease path {
+.envelope-crease .crease-shadow {
   fill: none;
-  stroke: rgba(255,255,255,.3);
-  stroke-width: .6;
+  stroke: rgba(20,22,14,.28);
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  filter: url(#creaseBlur);
+}
+.envelope-crease .crease-light {
+  fill: none;
+  stroke: rgba(255,255,255,.22);
+  stroke-width: .35;
   vector-effect: non-scaling-stroke;
 }
 .envelope-intro.opening .envelope-crease,
@@ -149,7 +176,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   backface-visibility: hidden;
 }
 .flap-face-front {
-  background: var(--sage);
+  background: linear-gradient(175deg, rgba(255,255,255,.08) 0%, var(--sage) 40%, rgba(0,0,0,.05) 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
 }
 .flap-face-front::before {
