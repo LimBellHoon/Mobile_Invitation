@@ -200,14 +200,15 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   filter: saturate(.8) contrast(.9) brightness(1.03) drop-shadow(0 4px 8px rgba(20,15,4,.3));
 }
 .envelope-center {
-  /* 접힘선(도장 → 좌우 아래로 벌어지는 선)과 겹치지 않는 높이에 고정 */
+  /* 플랩 안쪽 52%(카드 기준 24%) 지점 — 접힘선과 겹치지 않고 도장 바로 위에 놓임 */
   position: absolute;
-  top: 74%;
+  top: 52%;
   left: 0; right: 0;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
+  backface-visibility: hidden;
   transition: opacity .5s ease .34s;
 }
 .envelope-intro.opening .envelope-center,
