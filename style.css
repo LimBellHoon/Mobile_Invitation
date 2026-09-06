@@ -149,9 +149,9 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   transform-style: preserve-3d;
 }
 @keyframes flapOpen {
-  /* 음수 rotateX = 아래쪽 끝이 화면 안쪽(Z-)으로 젖혀짐. 멀어질수록 살짝 어두워지게 */
+  /* 양수 rotateX = 아래쪽 끝이 화면 앞쪽(Z+)으로 젖혀짐. 가까워질수록 빛을 더 받게 */
   0%   { transform: rotateX(0deg); filter: brightness(1); }
-  100% { transform: rotateX(-120deg); filter: brightness(.84); }
+  100% { transform: rotateX(120deg); filter: brightness(1.08); }
 }
 .flap-face {
   position: absolute; inset: 0;
