@@ -199,7 +199,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .envelope-center {
   /* 접힘선(도장 → 좌우 아래로 벌어지는 선)과 겹치지 않는 높이에 고정 */
   position: absolute;
-  top: 78%;
+  top: 74%;
   left: 0; right: 0;
   z-index: 2;
   display: flex;
@@ -227,6 +227,14 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   margin: 0;
 }
 .envelope-names .amp { font-style: italic; opacity: .8; margin: 0 6px; }
+.envelope-meta {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.72);
+  text-align: center;
+  margin: 12px 0 0;
+}
 .envelope-hint {
   position: absolute;
   bottom: 56px; left: 0; right: 0;
