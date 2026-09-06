@@ -83,7 +83,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   /* 노말맵 라이팅을 미리 구운 리넨 종이 텍스처 (이음매 없는 타일) */
   background-image: url('assets/paper-texture.png');
   background-size: 170px 170px;
-  opacity: .16;
+  opacity: .55;
   mix-blend-mode: overlay;
   z-index: 0;
   pointer-events: none;
@@ -159,7 +159,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute; inset: 0;
   background-image: url('assets/paper-texture.png');
   background-size: 170px 170px;
-  opacity: .14;
+  opacity: .5;
   mix-blend-mode: overlay;
 }
 .flap-face-back {
@@ -171,7 +171,7 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
   position: absolute; inset: 0;
   background-image: url('assets/paper-texture.png');
   background-size: 170px 170px;
-  opacity: .12;
+  opacity: .45;
   mix-blend-mode: overlay;
 }
 .envelope-seal {
