@@ -20,8 +20,6 @@
   --maxw: 480px;
   --gap-section: clamp(64px, 12vw, 96px);
 
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-fine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -82,10 +80,11 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .envelope-card::after {
   content: "";
   position: absolute; inset: 0;
-  background-image: var(--grain), var(--grain-fine);
-  background-size: 160px 160px, 60px 60px;
-  opacity: .22;
-  mix-blend-mode: multiply;
+  /* 노말맵 라이팅을 미리 구운 리넨 종이 텍스처 (이음매 없는 타일) */
+  background-image: url('assets/paper-texture.png');
+  background-size: 170px 170px;
+  opacity: .55;
+  mix-blend-mode: overlay;
   z-index: 0;
   pointer-events: none;
 }
@@ -158,9 +157,9 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .flap-face-front::before {
   content: "";
   position: absolute; inset: 0;
-  background-image: var(--grain);
-  background-size: 140px 140px;
-  opacity: .06;
+  background-image: url('assets/paper-texture.png');
+  background-size: 170px 170px;
+  opacity: .5;
   mix-blend-mode: overlay;
 }
 .flap-face-back {
@@ -170,10 +169,10 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .flap-face-back::before {
   content: "";
   position: absolute; inset: 0;
-  background-image: var(--grain);
-  background-size: 140px 140px;
-  opacity: .14;
-  mix-blend-mode: multiply;
+  background-image: url('assets/paper-texture.png');
+  background-size: 170px 170px;
+  opacity: .45;
+  mix-blend-mode: overlay;
 }
 .envelope-seal {
   position: absolute;
