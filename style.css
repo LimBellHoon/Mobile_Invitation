@@ -107,11 +107,11 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 /* 접힘면: 선 없이 아주 옅은 명암 차이로만 구분 */
 /* 실제 봉투 구조: 위 플랩(V) 아래로 좌우 날개가 완만하게 벌어지고, 그 아래가 몸통 */
 .facet-left {
-  clip-path: polygon(0 0, 50% 46%, 0 72%);
+  clip-path: polygon(0 18%, 50% 46%, 0 72%);
   background: rgba(0,0,0,.05);
 }
 .facet-right {
-  clip-path: polygon(100% 0, 50% 46%, 100% 72%);
+  clip-path: polygon(100% 18%, 50% 46%, 100% 72%);
   background: rgba(0,0,0,.022);
 }
 .facet-bottom {
@@ -138,7 +138,8 @@ body.envelope-lock { overflow: hidden; height: 100vh; }
 .envelope-flap {
   position: absolute;
   inset: 0;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  /* 위 플랩: 모서리가 아니라 옆면 39%(카드 기준 18%) 지점에서 사선이 시작 */
+  clip-path: polygon(0 0, 100% 0, 100% 39%, 50% 100%, 0 39%);
   transform-style: preserve-3d;
 }
 @keyframes flapOpen {
