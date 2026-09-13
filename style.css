@@ -637,6 +637,23 @@ main > section.section:nth-of-type(even) {
   display: flex; align-items: center; justify-content: center;
   font-size: 11px; color: var(--ink-40);
 }
+/* 처음엔 일부만 보여 섹션 길이를 줄이고, "더보기"로 나머지를 펼침 */
+.gallery-grid .g-item.g-extra { display: none; }
+.gallery-grid.expanded .g-item.g-extra { display: block; }
+.gallery-more {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--ink-60);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 10px 24px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+.gallery-more:hover { border-color: var(--sage); background: var(--ivory-2); }
 
 /* ============================================================
    7. LOCATION

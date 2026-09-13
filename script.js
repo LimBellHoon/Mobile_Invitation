@@ -238,20 +238,36 @@ const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
   const grid = $("#galleryGrid");
   if (!grid) return;
 
-  grid.innerHTML = CONFIG.galleryImages.map((src, i) => `
-    <div class="g-item" data-src="${src}">
+  // 갤러리 섹션이 너무 길어지지 않도록 처음엔 일부만 보여주고 "더보기"로 나머지를 펼침
+  const INITIAL_COUNT = 6;
+  const images = CONFIG.galleryImages;
+
+  grid.innerHTML = images.map((src, i) => `
+    <div class="g-item${i >= INITIAL_COUNT ? " g-extra" : ""}" data-src="${src}">
       <img src="${src}" alt="웨딩 사진 ${i + 1}" loading="lazy"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
       <span class="g-fallback" style="display:none">사진 ${i + 1}</span>
     </div>
   `).join("");
 
+  const moreBtn = $("#galleryMore");
+  if (moreBtn) {
+    const extraCount = images.length - INITIAL_COUNT;
+    if (extraCount > 0) {
+      moreBtn.hidden = false;
+      moreBtn.textContent = `사진 더보기 (+${extraCount})`;
+      moreBtn.addEventListener("click", () => {
+        grid.classList.add("expanded");
+        moreBtn.hidden = true;
+      });
+    }
+  }
+
   const lightbox = $("#lightbox");
   const lightboxImg = $("#lightboxImg");
   const lightboxCount = $("#lightboxCount");
   const prevBtn = $("#lightboxPrev");
   const nextBtn = $("#lightboxNext");
-  const images = CONFIG.galleryImages;
   let current = 0;
 
   // dir: 0 = 애니메이션 없이 즉시 표시(최초 오픈), 1 = 다음(왼쪽으로 슬라이드), -1 = 이전(오른쪽으로 슬라이드)
