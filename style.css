@@ -464,18 +464,18 @@ main > section.section:nth-of-type(even) {
 .couple-names {
   font-family: var(--font-display);
   font-weight: 500;
-  /* 320px 등 좁은 화면에서 이름이 중간에 줄바꿈되지 않도록 뷰포트에 맞춰 축소 */
-  font-size: clamp(24px, 7vw, 32px);
+  /* 320px 등 좁은 화면에서 이름이 중간에 줄바꿈되지 않도록 뷰포트에 맞춰 축소 (기존 대비 0.7배) */
+  font-size: clamp(17px, 5vw, 22px);
   letter-spacing: .01em;
   margin: 0 0 20px;
   display: flex;
   align-items: baseline;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px 14px;
+  gap: 7px 10px;
 }
 .couple-names span:not(.amp) { white-space: nowrap; }
-.couple-names .amp { color: var(--rose); font-style: italic; font-size: 30px; }
+.couple-names .amp { color: var(--rose); font-style: italic; font-size: .95em; }
 .intro-meta {
   font-size: 15px;
   color: var(--ink-60);
